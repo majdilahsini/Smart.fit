@@ -1,4 +1,4 @@
-typedef struct date_naissance {
+typedef struct date {
   int jour;
   int mois;
   int anne;
@@ -21,3 +21,11 @@ typedef struct fichediet_diet {
   char regime[50];
 
 } fd_diet;
+
+typedef struct cal_diet {
+
+  int date;
+  char heure[50];
+  int capacite;
+
+} c_diet;
