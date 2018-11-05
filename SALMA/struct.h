@@ -18,7 +18,7 @@ char nom[30] ;
 char prenom[30] ;
 date date_de_naissance ;
 char cin[10] ;
-char tel[30] ;
+char tel[10] ;
 char e_mail[30] ;
 int taille ;
 int poids ;
