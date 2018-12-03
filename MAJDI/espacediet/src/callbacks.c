@@ -64,3 +64,19 @@ on_quit_diet_clicked                   (GtkToolButton   *toolbutton,
 
 }
 
+
+void
+on_acc_adh_clicked                     (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_profil_adh_clicked                  (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+
+}
+

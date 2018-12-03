@@ -437,7 +437,7 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/majdi/Desktop/Espacediet'
+ac_pwd='/home/salma/Projects/Smart.fit/MAJDI/espacediet'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
@@ -685,12 +685,12 @@ S["mkdir_p"]="$(MKDIR_P)"
 S["MKDIR_P"]="/bin/mkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]=""
-S["install_sh"]="${SHELL} /home/majdi/Desktop/Espacediet/install-sh"
-S["MAKEINFO"]="${SHELL} /home/majdi/Desktop/Espacediet/missing makeinfo"
-S["AUTOHEADER"]="${SHELL} /home/majdi/Desktop/Espacediet/missing autoheader"
-S["AUTOMAKE"]="${SHELL} /home/majdi/Desktop/Espacediet/missing automake-1.15"
-S["AUTOCONF"]="${SHELL} /home/majdi/Desktop/Espacediet/missing autoconf"
-S["ACLOCAL"]="${SHELL} /home/majdi/Desktop/Espacediet/missing aclocal-1.15"
+S["install_sh"]="${SHELL} /home/salma/Projects/Smart.fit/MAJDI/espacediet/install-sh"
+S["MAKEINFO"]="${SHELL} /home/salma/Projects/Smart.fit/MAJDI/espacediet/missing makeinfo"
+S["AUTOHEADER"]="${SHELL} /home/salma/Projects/Smart.fit/MAJDI/espacediet/missing autoheader"
+S["AUTOMAKE"]="${SHELL} /home/salma/Projects/Smart.fit/MAJDI/espacediet/missing automake-1.15"
+S["AUTOCONF"]="${SHELL} /home/salma/Projects/Smart.fit/MAJDI/espacediet/missing autoconf"
+S["ACLOCAL"]="${SHELL} /home/salma/Projects/Smart.fit/MAJDI/espacediet/missing aclocal-1.15"
 S["VERSION"]="0.1"
 S["PACKAGE"]="espacediet"
 S["CYGPATH_W"]="echo"

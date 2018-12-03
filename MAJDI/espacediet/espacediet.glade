@@ -3,7 +3,7 @@
 
 <glade-interface>
 
-<widget class="GtkWindow" id="espacediet">
+<widget class="GtkWindow" id="espace_adhérent">
   <property name="width_request">750</property>
   <property name="height_request">450</property>
   <property name="visible">True</property>
@@ -26,7 +26,7 @@
       <property name="visible">True</property>
 
       <child>
-	<widget class="GtkToolbar" id="toolbar5">
+	<widget class="GtkToolbar" id="toolbar_adh">
 	  <property name="width_request">580</property>
 	  <property name="height_request">72</property>
 	  <property name="visible">True</property>
@@ -36,7 +36,7 @@
 	  <property name="show_arrow">True</property>
 
 	  <child>
-	    <widget class="GtkToolButton" id="acc_diet">
+	    <widget class="GtkToolButton" id="acc_adh">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Accueil</property>
 	      <property name="use_underline">True</property>
@@ -44,7 +44,7 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_accuei_diet_clicked" last_modification_time="Sat, 01 Dec 2018 17:22:10 GMT"/>
+	      <signal name="clicked" handler="on_acc_adh_clicked" last_modification_time="Sun, 02 Dec 2018 09:19:29 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">True</property>
@@ -53,7 +53,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="profil_diet">
+	    <widget class="GtkToolButton" id="profil_adh">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Profil</property>
 	      <property name="use_underline">True</property>
@@ -61,7 +61,7 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_profil_diet_clicked" last_modification_time="Sat, 01 Dec 2018 17:22:29 GMT"/>
+	      <signal name="clicked" handler="on_profil_adh_clicked" last_modification_time="Sun, 02 Dec 2018 09:20:15 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">True</property>
@@ -70,49 +70,14 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="dichediet">
+	    <widget class="GtkToolButton" id="rdv_adh">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Fiches diététique</property>
-	      <property name="use_underline">True</property>
-	      <property name="stock_id">gtk-copy</property>
-	      <property name="visible_horizontal">True</property>
-	      <property name="visible_vertical">True</property>
-	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_fchdiet_diet_clicked" last_modification_time="Sat, 01 Dec 2018 17:22:35 GMT"/>
-	    </widget>
-	    <packing>
-	      <property name="expand">False</property>
-	      <property name="homogeneous">False</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkToolButton" id="fichemed_diet">
-	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Fiches médicaux</property>
-	      <property name="use_underline">True</property>
-	      <property name="stock_id">gtk-index</property>
-	      <property name="visible_horizontal">True</property>
-	      <property name="visible_vertical">True</property>
-	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_fichemed_diet_clicked" last_modification_time="Sat, 01 Dec 2018 17:22:50 GMT"/>
-	    </widget>
-	    <packing>
-	      <property name="expand">False</property>
-	      <property name="homogeneous">False</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkToolButton" id="rend_diet">
-	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Les Rendez-vous</property>
+	      <property name="label" translatable="yes">Rendez-vous</property>
 	      <property name="use_underline">True</property>
 	      <property name="stock_id">gtk-select-color</property>
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_rendez_diet_clicked" last_modification_time="Sat, 01 Dec 2018 17:22:54 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -121,7 +86,39 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="dec_diet">
+	    <widget class="GtkToolButton" id="calen_adh">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">Calendrier</property>
+	      <property name="use_underline">True</property>
+	      <property name="stock_id">gtk-index</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">False</property>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkToolButton" id="staff_adh">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">Notre staff</property>
+	      <property name="use_underline">True</property>
+	      <property name="stock_id">gtk-about</property>
+	      <property name="visible_horizontal">True</property>
+	      <property name="visible_vertical">True</property>
+	      <property name="is_important">False</property>
+	    </widget>
+	    <packing>
+	      <property name="expand">False</property>
+	      <property name="homogeneous">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkToolButton" id="dec_adh">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Déconnexion</property>
 	      <property name="use_underline">True</property>
@@ -129,7 +126,6 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_dec_diet_clicked" last_modification_time="Sat, 01 Dec 2018 18:13:07 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -138,7 +134,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkToolButton" id="quit_diet">
+	    <widget class="GtkToolButton" id="quit_adh">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Quitter</property>
 	      <property name="use_underline">True</property>
@@ -146,7 +142,6 @@
 	      <property name="visible_horizontal">True</property>
 	      <property name="visible_vertical">True</property>
 	      <property name="is_important">False</property>
-	      <signal name="clicked" handler="on_quit_diet_clicked" last_modification_time="Sat, 01 Dec 2018 18:25:40 GMT"/>
 	    </widget>
 	    <packing>
 	      <property name="expand">False</property>
@@ -161,7 +156,7 @@
       </child>
 
       <child>
-	<widget class="GtkNotebook" id="notebookmain_diet">
+	<widget class="GtkNotebook" id="notebookmain_adh">
 	  <property name="width_request">750</property>
 	  <property name="height_request">378</property>
 	  <property name="visible">True</property>
@@ -192,7 +187,7 @@
 			  <property name="width_request">504</property>
 			  <property name="height_request">29</property>
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">&lt;span  size=&quot;24000&quot; style=&quot;italic&quot;&gt;Bienvenue à l'espace diététique !&lt;/span&gt;</property>
+			  <property name="label" translatable="yes">&lt;span  size=&quot;24000&quot; style=&quot;italic&quot;&gt;Bienvenue à l'espace Adhérent !&lt;/span&gt;</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">True</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -257,7 +252,13 @@
 	  </child>
 
 	  <child>
-	    <placeholder/>
+	    <widget class="GtkFixed" id="fixed11">
+	      <property name="visible">True</property>
+	    </widget>
+	    <packing>
+	      <property name="tab_expand">False</property>
+	      <property name="tab_fill">True</property>
+	    </packing>
 	  </child>
 
 	  <child>
