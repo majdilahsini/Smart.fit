@@ -96,3 +96,23 @@ on_toolbutton5s_clicked                (GtkToolButton   *toolbutton,
 void
 on_window3s_show                       (GtkWidget       *widget,
                                         gpointer         user_data);
+
+void
+on_toolbutton1_clicked                 (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);
+
+void
+on_treeview1_row_activated             (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);
+
+void
+on_toolbutton10s_clicked               (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);
+
+void
+on_treeview10s_row_activated           (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);

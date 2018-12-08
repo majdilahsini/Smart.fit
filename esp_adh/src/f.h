@@ -49,4 +49,5 @@ typedef struct fiche_perso1
 void enregistrer1(  char nom[50],char prenom[50],date ddn,
   char cin[10],char tel[10],char sexe[10]);
 
-  void afficher1(GtkWidget *list);
+ void afficher1(GtkWidget *list);
+  void afficher2(GtkWidget *list);

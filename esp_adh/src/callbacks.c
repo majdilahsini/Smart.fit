@@ -15,7 +15,7 @@ void
 on_button1s_clicked                    (GtkButton       *button,
                                         gpointer         user_data)
 {
-  GtkWidget *input1 , *input2;
+    GtkWidget *input1 , *input2;
     GtkWidget *output;
     GtkWidget *login;
     GtkWidget *window2s;
@@ -681,3 +681,58 @@ fp1 x;
 fclose(f);*/
 
 }
+
+
+
+void
+on_toolbutton10s_clicked               (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+GtkWidget *notebook,*treeview;
+  notebook = lookup_widget(GTK_WIDGET(toolbutton),"notebook10s");
+  gtk_notebook_set_current_page(notebook,0);
+   treeview=lookup_widget(GTK_WIDGET(toolbutton),"treeview10s");
+  afficher1(treeview);
+ 
+}
+
+
+
+void
+on_treeview10s_row_activated           (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data)
+                                        
+{
+ GtkWidget *label0, *label2, *label3, *label4,*label1;
+  GtkTreeIter iter;
+  GtkTreeModel *model;
+  gchar *string0, *string1, *string2, *string3,string4;
+
+  model = gtk_tree_view_get_model(treeview);
+  gtk_tree_model_get_iter(model,&iter,path);
+  
+  gtk_tree_model_get(model,&iter,0,&string0,-1);
+  gtk_tree_model_get(model,&iter,1,&string1,-1);
+  gtk_tree_model_get(model,&iter,2,&string2,-1);
+  gtk_tree_model_get(model,&iter,3,&string3,-1);
+  gtk_tree_model_get(model,&iter,4,&string4,-1);
+
+
+  label0 = lookup_widget(GTK_TREE_VIEW(treeview),"label601s");
+  label1 = lookup_widget(GTK_TREE_VIEW(treeview),"label511s");
+  label2 = lookup_widget(GTK_TREE_VIEW(treeview),"label621s");
+  label3 = lookup_widget(GTK_TREE_VIEW(treeview),"label671s");
+  label4 = lookup_widget(GTK_TREE_VIEW(treeview),"label691s");
+ 
+
+
+  gtk_label_set_text(GTK_LABEL(label0),string0);
+  gtk_label_set_text(GTK_LABEL(label1),string1);
+  gtk_label_set_text(GTK_LABEL(label2),string2);
+  gtk_label_set_text(GTK_LABEL(label3),string3);
+  gtk_label_set_text(GTK_LABEL(label4),string4);
+ 
+}
+

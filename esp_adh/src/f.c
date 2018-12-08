@@ -247,7 +247,7 @@ ddn.month, ddn.year,cin,tel,mail,adresse,sexe,goals);
 fclose(f);
 }
 
-enum
+/*enum
 {
   NOM,
   PRENOM,
@@ -308,3 +308,196 @@ char specialite[20];
   }
 
 }
+
+enum
+{
+  NOM2,
+  PRENOM2,
+  COURS,
+  DATE,
+  HEURE,
+  COLUMN2
+};
+
+
+void afficher2(GtkWidget *list)
+{
+  GtkCellRenderer *renderer,*toggle;
+  GtkTreeViewColumn *column;
+  GtkTreeIter iter;
+  GtkListStore *store;
+  char nom[10], nom1[50];
+char prenom[50],prenom1[50];
+char cours[20];
+char date[50];
+char heure[50];
+char cin[20], cin1[20],cinn[30];
+char tel[30],ddn[50],sexe[10];
+char salle[30];
+  FILE *f,*g,*k;
+  
+ g=fopen("dispo_coach.txt","r");
+  if (g!=NULL)
+      fscanf(g,"%s %s %s %s %s",cin,date,heure,salle,cours);
+
+  k=fopen("coach.txt","r");
+
+
+
+  while(fscanf(k,"%s %s %s %s %s %s",nom1,prenom1,cin1,tel,ddn,sexe)!=EOF)
+  {
+      if (strcmp(cin1,cin) == 0)
+        { 
+		strcpy(nom,nom1);
+		strcpy(prenom,prenom1);
+	}
+  }
+  fclose(g);
+  fclose(k);
+  
+  store=NULL;
+  store=gtk_tree_view_get_model(list);
+  if (store == NULL)
+  {
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" nom",renderer,"text",NOM2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" prenom",renderer,"text", PRENOM2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" date",renderer,"text",DATE,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" heure",renderer,"text",HEURE,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+   
+   renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" cours",renderer,"text",COURS,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+  store=gtk_list_store_new(COLUMN2,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING);
+  f=fopen("dispo_coach.txt","r");
+  if(f == NULL)
+  {
+    return;
+  }
+  
+  else
+  {
+  
+  g=fopen("dispo_coach.txt","r");
+  if (g!=NULL)
+      fscanf(g,"%s %s %s %s %s",cin,date,heure,salle,cours);
+
+  k=fopen("coach.txt","r");
+
+if (k != NULL)
+ {
+
+  while(fscanf(k,"%s %s %s %s %s %s",nom1,prenom1,cin1,tel,ddn,sexe)!=EOF)
+  {
+      if (strcmp(cin1,cin) == 0)
+        { 
+		f=fopen("dispo_coach.txt","a+");
+    		while(fscanf(f,"%s %s %s %s %s ",cin,date,heure,salle,cours) != EOF)
+    		{
+     
+     			 gtk_list_store_append(store,&iter);
+     			 gtk_list_store_set(store,&iter,NOM,nom, PRENOM,prenom,COURS ,cours,DATE,date,HEURE,heure,-1);
+      
+
+   		 }
+	}
+  }
+  
+  }
+  
+  
+    
+    fclose(f);
+     fclose(g);
+  fclose(k);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(list),GTK_TREE_MODEL(store));
+    g_object_unref(store);
+  }
+
+}*/
+
+
+enum
+{
+  NOM2,
+  PRENOM2,
+  COURS,
+  DATE,
+  HEURE,
+  COLUMN2
+};
+
+void afficher1(GtkWidget *list) {
+
+GtkCellRenderer *renderer;
+GtkTreeViewColumn *column;
+GtkTreeIter iter;
+GtkListStore *store;
+
+  char nom[10], nom1[50];
+char prenom[50],prenom1[50];
+char cours[20];
+char date[50];
+char heure[50];
+char cin[20], cin2[20],cinn[30];
+char tel[30],ddn[50],sexe[10];
+char salle[30];
+FILE *f, *f2;
+
+f = fopen("coach.txt","r");
+f2 = fopen("dispo_coach.txt","r");
+
+store = gtk_tree_view_get_model(list);
+if (store == NULL) {
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" nom",renderer,"text",NOM2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" prenom",renderer,"text", PRENOM2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" date",renderer,"text",DATE,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" heure",renderer,"text",HEURE,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+   
+   renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" cours",renderer,"text",COURS,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+}
+
+store = gtk_list_store_new(COLUMN2,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING);
+
+if (f!=NULL && f2!=NULL) {
+  while (fscanf(f2,"%s %s %s %s %s ",cin2,date,heure,salle,cours) != EOF) {
+   rewind(f);
+      while (fscanf(f,"%s %s %s %s %s %s",nom,prenom,cin,tel,ddn,sexe) != EOF) {
+        if (strcmp(cin2,cin) == 0){
+            gtk_list_store_append(store,&iter);
+            gtk_list_store_set(store,&iter,NOM2,nom,PRENOM2,prenom,COURS,cours,DATE,date,HEURE,heure,-1);
+      }
+    }
+  }
+}
+fclose(f);fclose(f2);
+gtk_tree_view_set_model(GTK_TREE_VIEW(list),GTK_TREE_MODEL(store));
+g_object_unref(store);
+}
+ 
+
