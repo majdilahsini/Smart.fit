@@ -1,4 +1,5 @@
-Coach 20/05/2018_14h00==>16h00 salle6 
-Kinésitherapeute 20/05/2018_14h00==>16h00 cabinetB 
-Coach 20/05/2018_14h00==>16h00 salle6 
-Kinésitherapeute 20/05/2018_14h00==>16h00 cabinetB 
+ Coach: pheobe buffey 20/05/2018 14h00==>16h00 salle6 kick_boxing 
+ Diététicien: pheobe buffey 20/05/2018 14h00==>16h00 cabinetA check-up 
+ Kinésitherapeute: perry hilmes 28/05/2018 08h00==>12h45 cabinetC check-up 
+ Kinésitherapeute: kathryn diaz 29/05/2018 14h00==>16h00 cabinetA check-up 
+ Docteur: monica geller 30/05/2018 08h00==>16h45 cabinetC check-up 

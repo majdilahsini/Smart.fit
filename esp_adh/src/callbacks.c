@@ -293,220 +293,49 @@ on_toolbutton3s_clicked                (GtkToolButton   *toolbutton,
 }
 
 
-void
-on_checkbutton1s_toggled               (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-GtkWidget *combo1;
 
-  FILE *f;
-  char date[50];char salle[30];
-
-
-
-
-  if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(togglebutton)))
-  {
-    f=fopen("dispo_coach.txt","r");
-    combo1=lookup_widget(GTK_WIDGET(togglebutton),"combobox3s");
-    /*output=lookup_widget(GTK_WIDGET(togglebutton),"label39s");*/
-
-    while (fscanf(f,"%s %s",date,salle) != EOF)
-    {
-      gtk_combo_box_append_text(GTK_COMBO_BOX(combo1),date);
-      /*gtk_label_set_text(GTK_LABEL(output),salle);*/
-    }
-    fclose(f);
-
-  }
-}
-
-
-
-
-void
-on_checkbutton3s_toggled               (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-GtkWidget *combo1;
-
-  FILE *f;
-  char date[50];char salle[30];
-
-  if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(togglebutton)))
-  {
-    f=fopen("dispo_kiné.txt","r");
-    combo1=lookup_widget(GTK_WIDGET(togglebutton),"combobox5s");
-    /*output=lookup_widget(GTK_WIDGET(togglebutton),"label39s");*/
-
-    while (fscanf(f,"%s %s",date,salle) != EOF)
-    {
-      gtk_combo_box_append_text(GTK_COMBO_BOX(combo1),date);
-      /*gtk_label_set_text(GTK_LABEL(output),salle);*/
-    }
-    fclose(f);
- }
-}
-
-
-void
-on_checkbutton4s_toggled               (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-GtkWidget *combo1 , *output;
-
-  FILE *f;
-  char date[50];
-char salle[30];
-
-
-  if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(togglebutton)))
-  {
-    f=fopen("dispo_med.txt","r");
-    combo1=lookup_widget(GTK_WIDGET(togglebutton),"combobox2s");
-    /*output=lookup_widget(GTK_WIDGET(togglebutton),"label39s");*/
-
-    while (fscanf(f,"%s %s",date,salle) != EOF)
-    {
-      gtk_combo_box_append_text(GTK_COMBO_BOX(combo1),date);
-      /*gtk_label_set_text(GTK_LABEL(output),salle);*/
-    }
-    fclose(f);
-}
-}
-
-
-void
+/*void
 on_button7s_clicked                    (GtkButton       *button,
                                         gpointer         user_data)
 {
-GtkWidget *combo3,*combo6,*combo2,*combo5;
-GtkWidget *check1,*check6,*check3,*check4;
+GtkWidget *labelk1,*labelk2,*labelk3,*labelk4,*labelk5,*labelk6;
 GtkWidget *output;
- char ch1[50];
-  char ch2[50];
-  char local[30];
-FILE *f2,*g;
+GtkWidget *image;
+char type[30], nom[50], prenom[50],date[30],heure[30],salle[20];
+FILE *f,*g;
+
+labelk1=lookup_widget(GTK_WIDGET(button),"label1000s");
+labelk2=lookup_widget(GTK_WIDGET(button),"label1004s");
+labelk3=lookup_widget(GTK_WIDGET(button),"label1005s");
+labelk4=lookup_widget(GTK_WIDGET(button),"label1006s");
+labelk5=lookup_widget(GTK_WIDGET(button),"label1007s");
+labelk6=lookup_widget(GTK_WIDGET(button),"label1008s");
+image=lookup_widget(GTK_WIDGET(button),"image181s");
+
+output =lookup_widget(GTK_WIDGET(button),"label37s");
 
 
 
-    f2=fopen("rdv_adherent.txt","a+");
-    combo3=lookup_widget(GTK_WIDGET(button),"combobox3s");
-    combo2=lookup_widget(GTK_WIDGET(button),"combobox2s");
-    combo6=lookup_widget(GTK_WIDGET(button),"combobox6s");
-    combo5=lookup_widget(GTK_WIDGET(button),"combobox5s");
+	strcpy(type,gtk_label_get_text(GTK_LABEL(labelk1)));
+	strcpy(nom,gtk_label_get_text(GTK_LABEL(labelk2)));
+	strcpy(prenom,gtk_label_get_text(GTK_LABEL(labelk3)));
+	strcpy(date,gtk_label_get_text(GTK_LABEL(labelk4)));
+	strcpy(heure,gtk_label_get_text(GTK_LABEL(labelk5)));
+	strcpy(salle,gtk_label_get_text(GTK_LABEL(labelk6)));
 
-    check4=lookup_widget(GTK_WIDGET(button),"checkbutton4s");
-    check1=lookup_widget(GTK_WIDGET(button),"checkbutton1s");
-    check6=lookup_widget(GTK_WIDGET(button),"checkbutton6s");
-    check3=lookup_widget(GTK_WIDGET(button),"checkbutton3s");
-    output=lookup_widget(GTK_WIDGET(button),"label38s");
-
-	if(f2 != NULL)
+	f=fopen("rdv_adherent.txt","a+");
+	
+	if(f != NULL)
 	{
-		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check6)))
-		{
-			strcpy(ch1,"Diététicien");
-			strcpy(ch2,gtk_combo_box_get_active_text(GTK_COMBO_BOX(combo6)));
-      g=fopen("dispo_diet.txt","a+");
-      char a[100] , b[30];
-      if(g !=NULL)
-      {
-        while(fscanf(g,"%s %s",a,b) != EOF)
-        {
-          strcpy(local,b);
-        }
-        fclose(g);
-      }
-			gtk_label_set_text(GTK_LABEL(output),"Rendez-vous validé(s)!");
-			fprintf(f2,"%s %s %s \n",ch1,ch2,local);
+		
+		fprintf(f,"%s %s %s %s %s %s \n",type,nom,prenom,date,heure,salle);
+		gtk_label_set_text(GTK_LABEL(output),"Rendez_vous Validés!");
+		gtk_image_set_from_stock(GTK_IMAGE(image),"gtk-ok",GTK_ICON_SIZE_BUTTON);
+		/*supprimer_rdv(date,heure,salle) ;
+	}
+	fclose(f);
 
-
-		}
-		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check1)))
-		{
-			strcpy(ch1,"Coach");
-			strcpy(ch2,gtk_combo_box_get_active_text(GTK_COMBO_BOX(combo3)));
-      g=fopen("dispo_coach.txt","r");
-      char a[100] , b[30];
-      if(g !=NULL)
-      {
-        while(fscanf(g,"%s %s",a,b) != EOF)
-        {
-          strcpy(local,b);
-        }
-        fclose(g);
-      }
-			gtk_label_set_text(GTK_LABEL(output),"Rendez-vous validé(s)!");
-			fprintf(f2,"%s %s %s \n",ch1,ch2,local);
-
-		}
-		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check4)))
-		{
-			strcpy(ch1,"Medecin");
-			strcpy(ch2,gtk_combo_box_get_active_text(GTK_COMBO_BOX(combo2)));
-      g=fopen("dispo_med.txt","r");
-      char a[100] , b[30];
-      if(g !=NULL)
-      {
-        while(fscanf(g,"%s %s",a,b) != EOF)
-        {
-          strcpy(local,b);
-        }
-        fclose(g);
-      }
-			gtk_label_set_text(GTK_LABEL(output),"Rendez-vous validé(s)!");
-			fprintf(f2,"%s %s %s \n",ch1,ch2,local);
-		}
-		if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check3)))
-		{
-			strcpy(ch1,"Kinésitherapeute");
-			strcpy(ch2,gtk_combo_box_get_active_text(GTK_COMBO_BOX(combo5)));
-        g=fopen("dispo_kiné.txt","r");
-        char a[100] , b[30];
-        if(g !=NULL)
-        {
-          while(fscanf(g,"%s %s",a,b) != EOF)
-          {
-            strcpy(local,b);
-          }
-          fclose(g);
-        }
-			gtk_label_set_text(GTK_LABEL(output),"Rendez-vous validé(s)!");
-			fprintf(f2,"%s %s %s \n",ch1,ch2,local);
-		}
-        }
-
-    fclose(f2);
-}
-
-
-void
-on_checkbutton6s_toggled               (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-
- GtkWidget *combo1;
-
-  FILE *f;
-  char date[50];char salle[30];
-
-  if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(togglebutton)))
-  {
-    f=fopen("dispo_diet.txt","r");
-    combo1=lookup_widget(GTK_WIDGET(togglebutton),"combobox6s");
-    /*output=lookup_widget(GTK_WIDGET(togglebutton),"label39s");*/
-
-    while (fscanf(f,"%s %s",date,salle) != EOF)
-    {
-      gtk_combo_box_append_text(GTK_COMBO_BOX(combo1),date);
-      /*gtk_label_set_text(GTK_LABEL(output),salle);*/
-    }
-    fclose(f);
-}
-
-  }
-
+}*/
 
 void
 on_toolbutton4s_clicked                (GtkToolButton   *toolbutton,
@@ -636,7 +465,7 @@ GtkWidget *notebook, *treeview2;
   notebook = lookup_widget(GTK_WIDGET(toolbutton),"notebook1s");
   gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook),4);
   treeview2=lookup_widget(GTK_WIDGET(toolbutton),"treeview2s");
-  afficher1(treeview2);
+  /*afficher1(treeview2);*/
 }
 
 void
@@ -692,7 +521,7 @@ GtkWidget *notebook,*treeview;
   notebook = lookup_widget(GTK_WIDGET(toolbutton),"notebook10s");
   gtk_notebook_set_current_page(notebook,0);
    treeview=lookup_widget(GTK_WIDGET(toolbutton),"treeview10s");
-  afficher1(treeview);
+  afficher_coach(treeview);
  
 }
 
@@ -705,10 +534,10 @@ on_treeview10s_row_activated           (GtkTreeView     *treeview,
                                         gpointer         user_data)
                                         
 {
- GtkWidget *label0, *label2, *label3, *label4,*label1;
+ GtkWidget *label0,*label1,*label2,*label3,*label4,*label5;
   GtkTreeIter iter;
   GtkTreeModel *model;
-  gchar *string0, *string1, *string2, *string3,string4;
+  gchar *string0, *string1, *string2, *string3, *string4,*string5;
 
   model = gtk_tree_view_get_model(treeview);
   gtk_tree_model_get_iter(model,&iter,path);
@@ -718,21 +547,343 @@ on_treeview10s_row_activated           (GtkTreeView     *treeview,
   gtk_tree_model_get(model,&iter,2,&string2,-1);
   gtk_tree_model_get(model,&iter,3,&string3,-1);
   gtk_tree_model_get(model,&iter,4,&string4,-1);
-
-
-  label0 = lookup_widget(GTK_TREE_VIEW(treeview),"label601s");
-  label1 = lookup_widget(GTK_TREE_VIEW(treeview),"label511s");
-  label2 = lookup_widget(GTK_TREE_VIEW(treeview),"label621s");
-  label3 = lookup_widget(GTK_TREE_VIEW(treeview),"label671s");
-  label4 = lookup_widget(GTK_TREE_VIEW(treeview),"label691s");
- 
-
+  gtk_tree_model_get(model,&iter,5,&string5,-1);
+  
+  label0 = lookup_widget(GTK_TREE_VIEW(treeview),"label1024s");
+  label1 = lookup_widget(GTK_TREE_VIEW(treeview),"label1023s");
+  label2 = lookup_widget(GTK_TREE_VIEW(treeview),"label1025s");
+  label3 = lookup_widget(GTK_TREE_VIEW(treeview),"label1026s");
+  label4 = lookup_widget(GTK_TREE_VIEW(treeview),"label1028s");
+  label5 = lookup_widget(GTK_TREE_VIEW(treeview),"label1027s");
+  
 
   gtk_label_set_text(GTK_LABEL(label0),string0);
   gtk_label_set_text(GTK_LABEL(label1),string1);
   gtk_label_set_text(GTK_LABEL(label2),string2);
   gtk_label_set_text(GTK_LABEL(label3),string3);
   gtk_label_set_text(GTK_LABEL(label4),string4);
+  gtk_label_set_text(GTK_LABEL(label5),string5);
  
+}
+
+
+void
+on_toolbutton11s_clicked               (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+  GtkWidget *notebook,*treeview;
+  notebook = lookup_widget(GTK_WIDGET(toolbutton),"notebook10s");
+  gtk_notebook_set_current_page(notebook,2);
+  treeview=lookup_widget(GTK_WIDGET(toolbutton),"treeview20s");
+  afficher_diet(treeview);
+}
+
+
+void
+on_treeview20s_row_activated           (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data)
+{
+  GtkWidget *label0,*label1,*label2,*label3,*label4;
+  GtkTreeIter iter;
+  GtkTreeModel *model;
+  gchar *string0, *string1, *string2, *string3, *string4;
+
+  model = gtk_tree_view_get_model(treeview);
+  gtk_tree_model_get_iter(model,&iter,path);
+  
+  gtk_tree_model_get(model,&iter,0,&string0,-1);
+  gtk_tree_model_get(model,&iter,1,&string1,-1);
+  gtk_tree_model_get(model,&iter,2,&string2,-1);
+  gtk_tree_model_get(model,&iter,3,&string3,-1);
+  gtk_tree_model_get(model,&iter,4,&string4,-1);
+  
+  label0 = lookup_widget(GTK_TREE_VIEW(treeview),"label558s");
+  label1 = lookup_widget(GTK_TREE_VIEW(treeview),"label187s");
+  label2 = lookup_widget(GTK_TREE_VIEW(treeview),"label573s");
+  label3 = lookup_widget(GTK_TREE_VIEW(treeview),"label584s");
+  label4 = lookup_widget(GTK_TREE_VIEW(treeview),"label606s");
+  
+
+  gtk_label_set_text(GTK_LABEL(label0),string0);
+  gtk_label_set_text(GTK_LABEL(label1),string1);
+  gtk_label_set_text(GTK_LABEL(label2),string2);
+  gtk_label_set_text(GTK_LABEL(label3),string3);
+  gtk_label_set_text(GTK_LABEL(label4),string4);
+  
+}
+
+
+void
+on_toolbutton12s_clicked               (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+  GtkWidget *notebook,*treeview;
+  notebook = lookup_widget(GTK_WIDGET(toolbutton),"notebook10s");
+  gtk_notebook_set_current_page(notebook,3);
+  treeview=lookup_widget(GTK_WIDGET(toolbutton),"treeview30s");
+  afficher_kine(treeview);
+}
+
+
+void
+on_treeview2_row_activated             (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data)
+{
+  GtkWidget *label0,*label1,*label2,*label3,*label4;
+  GtkTreeIter iter;
+  GtkTreeModel *model;
+  gchar *string0, *string1, *string2, *string3, *string4;
+
+  model = gtk_tree_view_get_model(treeview);
+  gtk_tree_model_get_iter(model,&iter,path);
+  
+  gtk_tree_model_get(model,&iter,0,&string0,-1);
+  gtk_tree_model_get(model,&iter,1,&string1,-1);
+  gtk_tree_model_get(model,&iter,2,&string2,-1);
+  gtk_tree_model_get(model,&iter,3,&string3,-1);
+  gtk_tree_model_get(model,&iter,4,&string4,-1);
+  
+  label0 = lookup_widget(GTK_TREE_VIEW(treeview),"label1004s");
+  label1 = lookup_widget(GTK_TREE_VIEW(treeview),"label1005s");
+  label2 = lookup_widget(GTK_TREE_VIEW(treeview),"label1006s");
+  label3 = lookup_widget(GTK_TREE_VIEW(treeview),"label1007s");
+  label4 = lookup_widget(GTK_TREE_VIEW(treeview),"label1008s");
+  
+
+  gtk_label_set_text(GTK_LABEL(label0),string0);
+  gtk_label_set_text(GTK_LABEL(label1),string1);
+  gtk_label_set_text(GTK_LABEL(label2),string2);
+  gtk_label_set_text(GTK_LABEL(label3),string3);
+  gtk_label_set_text(GTK_LABEL(label4),string4);
+}
+
+
+void
+on_toolbutton13s_clicked               (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+  GtkWidget *notebook,*treeview;
+  notebook = lookup_widget(GTK_WIDGET(toolbutton),"notebook10s");
+  gtk_notebook_set_current_page(notebook,1);
+  treeview=lookup_widget(GTK_WIDGET(toolbutton),"treeview40s");
+  afficher_med(treeview);
+}
+
+
+void
+on_treeview40s_row_activated           (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data)
+{
+GtkWidget *label0,*label1,*label2,*label3,*label4;
+  GtkTreeIter iter;
+  GtkTreeModel *model;
+  gchar *string0, *string1, *string2, *string3, *string4;
+
+  model = gtk_tree_view_get_model(treeview);
+  gtk_tree_model_get_iter(model,&iter,path);
+  
+  gtk_tree_model_get(model,&iter,0,&string0,-1);
+  gtk_tree_model_get(model,&iter,1,&string1,-1);
+  gtk_tree_model_get(model,&iter,2,&string2,-1);
+  gtk_tree_model_get(model,&iter,3,&string3,-1);
+  gtk_tree_model_get(model,&iter,4,&string4,-1);
+  
+  label0 = lookup_widget(GTK_TREE_VIEW(treeview),"label1013s");
+  label1 = lookup_widget(GTK_TREE_VIEW(treeview),"label1014s");
+  label2 = lookup_widget(GTK_TREE_VIEW(treeview),"label1015s");
+  label3 = lookup_widget(GTK_TREE_VIEW(treeview),"label1016s");
+  label4 = lookup_widget(GTK_TREE_VIEW(treeview),"label1017s");
+  
+
+  gtk_label_set_text(GTK_LABEL(label0),string0);
+  gtk_label_set_text(GTK_LABEL(label1),string1);
+  gtk_label_set_text(GTK_LABEL(label2),string2);
+  gtk_label_set_text(GTK_LABEL(label3),string3);
+  gtk_label_set_text(GTK_LABEL(label4),string4);
+}
+
+
+
+
+
+
+
+void
+on_button110s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *labelm1,*labelm2,*labelm3,*labelm4,*labelm5,*labelm6;
+GtkWidget *output;
+GtkWidget *image;
+char type[30], nom[50], prenom[50],date[30],heure[30],salle[20],cours[10];
+FILE *f,*g;
+
+labelm1=lookup_widget(GTK_WIDGET(button),"label1009s");
+labelm2=lookup_widget(GTK_WIDGET(button),"label1013s");
+labelm3=lookup_widget(GTK_WIDGET(button),"label1014s");
+labelm4=lookup_widget(GTK_WIDGET(button),"label1015s");
+labelm5=lookup_widget(GTK_WIDGET(button),"label1016s");
+labelm6=lookup_widget(GTK_WIDGET(button),"label1017s");
+image=lookup_widget(GTK_WIDGET(button),"image181s");
+
+output =lookup_widget(GTK_WIDGET(button),"label37s");
+
+
+
+	strcpy(type,gtk_label_get_text(GTK_LABEL(labelm1)));
+	strcpy(nom,gtk_label_get_text(GTK_LABEL(labelm2)));
+	strcpy(prenom,gtk_label_get_text(GTK_LABEL(labelm3)));
+	strcpy(date,gtk_label_get_text(GTK_LABEL(labelm4)));
+	strcpy(heure,gtk_label_get_text(GTK_LABEL(labelm5)));
+	strcpy(salle,gtk_label_get_text(GTK_LABEL(labelm6)));
+	strcpy(cours,"check-up");
+	f=fopen("rdv_adherent.txt","a+");
+	
+	if(f != NULL)
+	{
+		
+		fprintf(f,"%s %s %s %s %s %s %s \n",type,nom,prenom,date,heure,salle,cours);
+		gtk_label_set_text(GTK_LABEL(output),"Rendez_vous Validés!");
+		gtk_image_set_from_stock(GTK_IMAGE(image),"gtk-ok",GTK_ICON_SIZE_BUTTON);
+		/*supprimer_rdv(date,heure,salle) ;*/
+	}
+	fclose(f);
+}
+
+
+void
+on_button90s_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *labeld1,*labeld2,*labeld3,*labeld4,*labeld5,*labeld6;
+GtkWidget *output;
+GtkWidget *image;
+char type[30], nom[50], prenom[50],date[30],heure[30],salle[20],cours[10];;
+FILE *f,*g;
+
+labeld1=lookup_widget(GTK_WIDGET(button),"label529s");
+labeld2=lookup_widget(GTK_WIDGET(button),"label558s");
+labeld3=lookup_widget(GTK_WIDGET(button),"label187s");
+labeld4=lookup_widget(GTK_WIDGET(button),"label573s");
+labeld5=lookup_widget(GTK_WIDGET(button),"label584s");
+labeld6=lookup_widget(GTK_WIDGET(button),"label606s");
+image=lookup_widget(GTK_WIDGET(button),"image181s");
+
+output =lookup_widget(GTK_WIDGET(button),"label37s");
+
+
+
+	strcpy(type,gtk_label_get_text(GTK_LABEL(labeld1)));
+	strcpy(nom,gtk_label_get_text(GTK_LABEL(labeld2)));
+	strcpy(prenom,gtk_label_get_text(GTK_LABEL(labeld3)));
+	strcpy(date,gtk_label_get_text(GTK_LABEL(labeld4)));
+	strcpy(heure,gtk_label_get_text(GTK_LABEL(labeld5)));
+	strcpy(salle,gtk_label_get_text(GTK_LABEL(labeld6)));
+	strcpy(cours,"check-up");
+	f=fopen("rdv_adherent.txt","a+");
+	
+	if(f != NULL)
+	{
+		
+		fprintf(f,"%s %s %s %s %s %s %s \n",type,nom,prenom,date,heure,salle,cours);
+		gtk_label_set_text(GTK_LABEL(output),"Rendez_vous Validés!");
+		gtk_image_set_from_stock(GTK_IMAGE(image),"gtk-ok",GTK_ICON_SIZE_BUTTON);
+		/*supprimer_rdv(date,heure,salle) ;*/
+	}
+	fclose(f);
+}
+
+
+void
+on_button150s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *labelk1,*labelk2,*labelk3,*labelk4,*labelk5,*labelk6;
+GtkWidget *output;
+GtkWidget *image;
+char type[30], nom[50], prenom[50],date[30],heure[30],salle[20],cours[10];
+FILE *f,*g;
+
+labelk1=lookup_widget(GTK_WIDGET(button),"label1000s");
+labelk2=lookup_widget(GTK_WIDGET(button),"label1004s");
+labelk3=lookup_widget(GTK_WIDGET(button),"label1005s");
+labelk4=lookup_widget(GTK_WIDGET(button),"label1006s");
+labelk5=lookup_widget(GTK_WIDGET(button),"label1007s");
+labelk6=lookup_widget(GTK_WIDGET(button),"label1008s");
+image=lookup_widget(GTK_WIDGET(button),"image181s");
+
+output =lookup_widget(GTK_WIDGET(button),"label37s");
+
+
+
+	strcpy(type,gtk_label_get_text(GTK_LABEL(labelk1)));
+	strcpy(nom,gtk_label_get_text(GTK_LABEL(labelk2)));
+	strcpy(prenom,gtk_label_get_text(GTK_LABEL(labelk3)));
+	strcpy(date,gtk_label_get_text(GTK_LABEL(labelk4)));
+	strcpy(heure,gtk_label_get_text(GTK_LABEL(labelk5)));
+	strcpy(salle,gtk_label_get_text(GTK_LABEL(labelk6)));
+	strcpy(cours,"check-up");
+	f=fopen("rdv_adherent.txt","a+");
+	
+	if(f != NULL)
+	{
+		
+		fprintf(f,"%s %s %s %s %s %s %s \n",type,nom,prenom,date,heure,salle,cours);
+		gtk_label_set_text(GTK_LABEL(output),"Rendez_vous Validés!");
+		gtk_image_set_from_stock(GTK_IMAGE(image),"gtk-ok",GTK_ICON_SIZE_BUTTON);
+		/*supprimer_rdv(date,heure,salle) ;*/
+	}
+	fclose(f);
+}
+
+
+void
+on_button120s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *labelc1,*labelc2,*labelc3,*labelc4,*labelc5,*labelc6,*labelc7;
+GtkWidget *output;
+GtkWidget *image;
+char type[30], nom[50], prenom[50],date[30],heure[30],salle[20],cours[50];
+FILE *f,*g;
+
+labelc1=lookup_widget(GTK_WIDGET(button),"label1019s");
+labelc2=lookup_widget(GTK_WIDGET(button),"label1024s");
+labelc3=lookup_widget(GTK_WIDGET(button),"label1023s");
+labelc4=lookup_widget(GTK_WIDGET(button),"label1026s");
+labelc5=lookup_widget(GTK_WIDGET(button),"label1028s");
+labelc6=lookup_widget(GTK_WIDGET(button),"label1027s");
+labelc7=lookup_widget(GTK_WIDGET(button),"label1025s");
+image=lookup_widget(GTK_WIDGET(button),"image181s");
+
+output =lookup_widget(GTK_WIDGET(button),"label37s");
+
+
+
+	strcpy(type,gtk_label_get_text(GTK_LABEL(labelc1)));
+	strcpy(nom,gtk_label_get_text(GTK_LABEL(labelc2)));
+	strcpy(prenom,gtk_label_get_text(GTK_LABEL(labelc3)));
+	strcpy(date,gtk_label_get_text(GTK_LABEL(labelc4)));
+	strcpy(heure,gtk_label_get_text(GTK_LABEL(labelc5)));
+	strcpy(salle,gtk_label_get_text(GTK_LABEL(labelc6)));
+	strcpy(cours,gtk_label_get_text(GTK_LABEL(labelc7)));
+
+	f=fopen("rdv_adherent.txt","a+");
+	
+	if(f != NULL)
+	{
+		
+		fprintf(f,"%s %s %s %s %s %s %s \n",type,nom,prenom,date,heure,salle,cours);
+		gtk_label_set_text(GTK_LABEL(output),"Rendez_vous Validés!");
+		gtk_image_set_from_stock(GTK_IMAGE(image),"gtk-ok",GTK_ICON_SIZE_BUTTON);
+		/*supprimer_rdv(date,heure,salle) ;*/
+	}
+	fclose(f);
 }
 

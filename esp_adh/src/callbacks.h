@@ -116,3 +116,77 @@ on_treeview10s_row_activated           (GtkTreeView     *treeview,
                                         GtkTreePath     *path,
                                         GtkTreeViewColumn *column,
                                         gpointer         user_data);
+
+void
+on_toolbutton11s_clicked               (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);
+
+void
+on_treeview20s_row_activated           (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);
+
+void
+on_toolbutton12s_clicked               (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);
+
+void
+on_treeview2_row_activated             (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);
+
+void
+on_toolbutton13s_clicked               (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);
+
+void
+on_treeview40s_row_activated           (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);
+
+void
+on_button110s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button90s_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button100s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button150s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button110s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button90s_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button150s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button110s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button90s_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button150s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button120s_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
