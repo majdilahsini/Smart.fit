@@ -1,0 +1,7 @@
+Lundi 1 0 1 0
+Mardi 1 0 1 0
+Mercredi 0 1 0 1
+Jeudi 1 1 0 0
+Vendredi 1 0 1 0
+Samedi 1 1 1 1
+Dimanche 1 1 1 1
