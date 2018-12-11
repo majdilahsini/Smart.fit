@@ -28,30 +28,32 @@ typedef struct fiche_perso
   char tel[10];
   char mail[50];
   char sexe[10];
-  char goals[150];
-  char adresse[150];
-  char login[50];
-  char mdp[50];
+
 }fp;
-void enregistrer(  char nom[50],char prenom[50],date ddn,
-  char cin[10],char tel[10],char mail[50],char adresse[],char sexe[10],
-  char goals[150]);
+void enregistrer( char cin[10] ,char nom[50],char prenom[50],date ddn,char tel[10],char mail[50],char sexe[20]);
 
-typedef struct fiche_perso1
-{
-  char nom[50];
-  char prenom[50];
-  date ddn;
-  char cin[10];
-  char sexe[10];
-  char tel[10];
-}fp1;
-void enregistrer1(  char nom[50],char prenom[50],date ddn,
-  char cin[10],char tel[10],char sexe[10]);
+void enregistrer1(  char nom[50],char prenom[50],date ddn,char cin[10],char tel[10],char sexe[10]);
 
- void afficher_coach(GtkWidget *list);
+void afficher_coach(GtkWidget *list) ;
  void afficher_diet(GtkWidget *list);
  void afficher_kine(GtkWidget *list);
  void afficher_med(GtkWidget *list);
-  void afficher2(GtkWidget *list);
+ void afficher_rdv(GtkWidget *list);
+
 void supprimer_rdv(char date[30],char heure[30], char salle[20]) ;
+void mod_profil_adh (fp a, char cin[10]);
+void tmp_cin (char cin[10]);
+void afficher_staff(GtkWidget *list);
+void annuler_rdv(char date[30],char heure[30], char salle[30]) ;
+void actualiser_dispo_diet(char date[30],char heure[30], char salle[30]) ;
+void actualiser_dispo_med(char date[30],char heure[30], char salle[30]);
+void actualiser_dispo_kine(char date[30],char heure[30], char salle[30]) ;
+void actualiser_dispo_coach(char date[30],char heure[30], char salle[30]) ;
+void actualiser_dispo_coach2(char date[30],char heure[30], char salle[30]) ;
+void annuler_rdv2(char date[30],char heure[30], char salle[30]) ;
+void afficher_staff2(GtkWidget *list);
+
+
+
+
+

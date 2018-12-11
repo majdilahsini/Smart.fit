@@ -105,44 +105,66 @@ fclose(f);
 enum
 {
   AVEC,
-  DATE_ET_HEURE,
+  NOM,
+  PRENOM,
+  DATE,
+  HEURE,
   LOCAL,
+  COURS,
   COLUMN
 };
 
-void afficher(GtkWidget *list)
+void afficher_rdv(GtkWidget *list)
 {
   GtkCellRenderer *renderer,*toggle;
   GtkTreeViewColumn *column;
   GtkTreeIter iter;
   GtkListStore *store;
-  char avec[10];
-char date_et_heure[50];
-char local[20];
+  char avec[40];
+  char date[50];
+  char local[20];
+  char nom[50];
+  char prenom[50];
+  char heure[50];
+  char cours[50];
   FILE *f;
   store=NULL;
   store=gtk_tree_view_get_model(list);
   if (store == NULL)
   {
+    
+    
     renderer=gtk_cell_renderer_text_new();
-    column=gtk_tree_view_column_new_with_attributes(" avec:",renderer,"text",AVEC,NULL);
+    column=gtk_tree_view_column_new_with_attributes(" nom",renderer,"text",NOM,NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
 
-
-
     renderer=gtk_cell_renderer_text_new();
-    column=gtk_tree_view_column_new_with_attributes(" date_et_heure",renderer,"text", DATE_ET_HEURE,NULL);
+    column=gtk_tree_view_column_new_with_attributes(" prenom",renderer,"text",PRENOM,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" avec",renderer,"text",AVEC,NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
 
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" date",renderer,"text",DATE,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" heure",renderer,"text",HEURE,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
     renderer=gtk_cell_renderer_text_new();
     column=gtk_tree_view_column_new_with_attributes(" local",renderer,"text",LOCAL,NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
-
-
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" cours",renderer,"text",COURS,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
 
 
   }
-  store=gtk_list_store_new(COLUMN,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING);
+  store=gtk_list_store_new(COLUMN,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING);
   f=fopen("rdv_adherent.txt","r");
   if(f == NULL)
   {
@@ -151,10 +173,10 @@ char local[20];
   else
   {
     f=fopen("rdv_adherent.txt","a+");
-    while(fscanf(f,"%s %s %s",avec,date_et_heure,local) != EOF)
+    while(fscanf(f,"%s %s %s %s %s %s %s",avec,nom,prenom,date,heure,local,cours) != EOF)
     {
       gtk_list_store_append(store,&iter);
-      gtk_list_store_set(store,&iter,AVEC,avec, DATE_ET_HEURE,date_et_heure,LOCAL,local,-1);
+      gtk_list_store_set(store,&iter, NOM,nom,PRENOM,prenom,AVEC,avec,DATE,date,HEURE,heure,LOCAL,local,COURS, cours,-1);
 
     }
     fclose(f);
@@ -219,8 +241,7 @@ return n;
 }*/
 
 
-void enregistrer1(  char nom[50],char prenom[50],date ddn,
-  char cin[10],char tel[10],char sexe[10])
+/*void enregistrer1( char cin[10], char nom[50],char prenom[50],date ddn,char tel[10],char sexe[10])
 {
 FILE *f ;
 	f=fopen("adherents.txt","a+");
@@ -231,31 +252,29 @@ ddn.month, ddn.year,cin,tel,sexe);
   }
 fclose(f);
 }
+*/
 
-
-void enregistrer(  char nom[50],char prenom[50],date ddn,
-  char cin[10],char tel[10],char mail[50],char adresse[],char sexe[10],
-  char goals[150])
+void enregistrer( char cin[10] ,char nom[50],char prenom[50],date ddn,char tel[10],char mail[50],char sexe[20])
 {
 FILE *f ;
-	f=fopen("adherents2.txt","a+");
+	f=fopen("adherents.txt","a+");
 	if(f != NULL)
 	{
-		fprintf(f,"%s %s %d %d %d %s %s %s %s %s %s\n",nom,prenom,ddn.day,
-ddn.month, ddn.year,cin,tel,mail,adresse,sexe,goals);
+		fprintf(f,"%s %s %s %d %d %d  %s %s %s\n",cin,nom,prenom,ddn.day,ddn.month,ddn.year,tel,mail,sexe);
   }
 fclose(f);
 }
 
 /*enum
 {
-  NOM,
-  PRENOM,
-  SPECIALITE,
-  COLUMN1
+  NOMS,
+  PRENOMS,
+  SPECIALITES,
+  TELS,
+  COLUMNS
 };
 
-void afficher1(GtkWidget *list)
+void afficher_staff(GtkWidget *list)
 {
   GtkCellRenderer *renderer,*toggle;
   GtkTreeViewColumn *column;
@@ -263,53 +282,109 @@ void afficher1(GtkWidget *list)
   GtkListStore *store;
   char nom[10];
 char prenom[50];
-char specialite[20];
-  FILE *f;
+char specialite[100];
+char cin[30],tel[30],sexe[30];
+char date[30];
+  FILE *f,*g,*k,*i;
   store=NULL;
   store=gtk_tree_view_get_model(list);
   if (store == NULL)
   {
     renderer=gtk_cell_renderer_text_new();
-    column=gtk_tree_view_column_new_with_attributes(" nom",renderer,"text",NOM,NULL);
+    column=gtk_tree_view_column_new_with_attributes(" nom",renderer,"text",NOMS,NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
 
 
 
     renderer=gtk_cell_renderer_text_new();
-    column=gtk_tree_view_column_new_with_attributes(" prenom",renderer,"text", PRENOM,NULL);
+    column=gtk_tree_view_column_new_with_attributes(" prenom",renderer,"text", PRENOMS,NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
 
     renderer=gtk_cell_renderer_text_new();
-    column=gtk_tree_view_column_new_with_attributes(" specialite",renderer,"text",SPECIALITE,NULL);
+    column=gtk_tree_view_column_new_with_attributes(" specialite",renderer,"text",SPECIALITES,NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
 
-
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" tel",renderer,"text",TELS,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
 
 
   }
-  store=gtk_list_store_new(COLUMN1,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING);
-  f=fopen("staff.txt","r");
+  store=gtk_list_store_new(COLUMNS,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING);
+  f=fopen("dieteticien.txt","r");
   if(f == NULL)
   {
     return;
   }
   else
   {
-    f=fopen("staff.txt","a+");
-    while(fscanf(f,"%s %s %s",nom,prenom,specialite) != EOF)
+    f=fopen("dietetitien.txt","a+");
+    while(fscanf(f,"%s %s %s %s %s %s",nom,prenom,cin,tel,date,sexe) != EOF)
     {
+      strcpy(specialite,"diététicien");
       gtk_list_store_append(store,&iter);
-      gtk_list_store_set(store,&iter,NOM,nom, PRENOM,prenom,SPECIALITE,specialite,-1);
+      gtk_list_store_set(store,&iter,NOMS,nom, PRENOMS,prenom,SPECIALITES,specialite,TELS,tel,-1);
 
     }
     fclose(f);
+   } 
+    g=fopen("medecin.txt","r");
+    if(g == NULL)
+  {
+    return;
+  }
+  else
+  {
+    g=fopen("medecin.txt","a+");
+    while(fscanf(g,"%s %s %s %s %s %s",nom,prenom,cin,tel,date,sexe) != EOF)
+    {
+      strcpy(specialite,"medecin");
+      gtk_list_store_append(store,&iter);
+      gtk_list_store_set(store,&iter,NOMS,nom, PRENOMS,prenom,SPECIALITES,specialite,TELS,tel,-1);
+
+    }
+    fclose(g);
+    }
+    k=fopen("kine.txt","r");
+    if(k == NULL)
+  {
+    return;
+  }
+  else
+  {
+    k=fopen("kine.txt","a+");
+    while(fscanf(k,"%s %s %s %s %s %s",nom,prenom,cin,tel,date,sexe) != EOF)
+    {
+      strcpy(specialite,"Kinésitherapeute");
+      gtk_list_store_append(store,&iter);
+      gtk_list_store_set(store,&iter,NOMS,nom, PRENOMS,prenom,SPECIALITES,specialite,TELS,tel,-1);
+
+    }
+    fclose(k);
+    }
+    i=fopen("coach.txt","r");
+    if(i == NULL)
+  {
+    return;
+  }
+  else
+  {
+    i=fopen("coach.txt","a+");
+    while(fscanf(i,"%s %s %s %s %s %s",nom,prenom,cin,tel,date,sexe) != EOF)
+    {
+      strcpy(specialite,"coach");
+      gtk_list_store_append(store,&iter);
+      gtk_list_store_set(store,&iter,NOMS,nom, PRENOMS,prenom,SPECIALITES,specialite,TELS,tel,-1);
+
+    }
+    fclose(i);
     gtk_tree_view_set_model(GTK_TREE_VIEW(list),GTK_TREE_MODEL(store));
     g_object_unref(store);
   }
 
-}
+}*/
 
-enum
+/*enum
 {
   NOM2,
   PRENOM2,
@@ -439,7 +514,7 @@ enum
   COLUMNC
 };
 
-void afficher_coach(GtkWidget *list) {
+/*void afficher_coach(GtkWidget *list) {
 
 GtkCellRenderer *renderer;
 GtkTreeViewColumn *column;
@@ -493,7 +568,7 @@ store = gtk_list_store_new(COLUMNC,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_T
 if (f!=NULL && f2!=NULL) {
   while (fscanf(f2,"%s %s %s %s %s ",cin2,date,heure,salle,cours) != EOF) {
    rewind(f);
-      while (fscanf(f,"%s %s %s %s %s %s",nom,prenom,cin,tel,ddn,sexe) != EOF) {
+      while (fscanf(f,"%s %s %s %s %s %s\n",nom,prenom,cin,tel,ddn,sexe) != EOF) {
         if (strcmp(cin2,cin) == 0){
             gtk_list_store_append(store,&iter);
             gtk_list_store_set(store,&iter,NOMC,nom,PRENOMC,prenom,COURSC,cours,DATEC,date,HEUREC,heure,SALLEC,salle,-1);
@@ -505,7 +580,7 @@ fclose(f);fclose(f2);
 gtk_tree_view_set_model(GTK_TREE_VIEW(list),GTK_TREE_MODEL(store));
 g_object_unref(store);
 }
- 
+ */
  
  enum
 {
@@ -534,7 +609,7 @@ char tel[50],ddn[50],sexe[30];
 char salle[30];
 FILE *f, *f2;
 
-f = fopen("diet.txt","r");
+f = fopen("dieteticiens.txt","r");
 f2 = fopen("dispo_diet.txt","r");
 
 store = gtk_tree_view_get_model(list);
@@ -599,7 +674,7 @@ GtkTreeViewColumn *column;
 GtkTreeIter iter;
 GtkListStore *store;
 
-  char nom[50], nom1[50];
+char nom[50], nom1[50];
 char prenom[50],prenom1[50];
 char cours[50];
 char date[50];
@@ -607,6 +682,7 @@ char heure[50];
 char cin[30], cin2[30],cinn[30];
 char tel[50],ddn[50],sexe[30];
 char salle[30];
+
 FILE *f, *f2;
 
 f = fopen("kine.txt","r");
@@ -732,43 +808,499 @@ g_object_unref(store);
 }
  
 
-/*void supprimer_rdv(char date[30],char heure[30], char salle[20]) 
+/*void annuler_rdv(char date[30],char heure[30], char salle[30]) 
 {
   FILE *f2, *f1;
-  char date1[30],heure1[30], cin [20],salle1[20];
- 
+  char date1[30],heure1[30], cin [20],salle1[20],cour1[20],nom1[50],prenom1[50];
+ char type1[50];
 
 
-  f2 = fopen("dispo_kine.txt","r");
-  f1 = fopen("dispo_kine2.txt","w+");
+  f2 = fopen("rdv_adherent.txt","r");
+  f1 = fopen("rdv_adherent2.txt","w");
 
   if (f2 != NULL && f1 != NULL)
    {
-    while (fscanf(f2,"%s %s %s %s %s %s",cin,date1,heure1,salle1) != EOF) 
+    while (fscanf(f2,"%s %s %s %s %s %s %s",nom1,prenom1,type1,date1,heure1,salle1,cour1) != EOF) 
     {
           if ((strcmp(date,date1) == 0) && (strcmp(heure,heure1)==0) && (strcmp(salle,salle1)==0))
               fprintf(f1,"");
           else
-              fprintf(f1,"%s %s %s %s %s %s\n",cin,date,heure,salle);
+              fprintf(f1,"%s %s %s %s %s %s %s\n",nom1,prenom1,type1,date1,heure1,salle1,cour1);
     }
   }
   fclose(f2);
   fclose(f1);
-  remove("dispo_kine.txt");
-  rename("dispo_kine2.txt","dispo_kine.txt");
+  remove("rdv_adherents.txt");
+  rename("rdv_adherent2.txt","rdv_adherent.txt");
 }*/
 				
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+void mod_profil_adh (fp a, char cin[10]) 
+{
+  FILE *f, *g;
+  char nom [20],prenom [20], cin1[20], tel [20], sexe [20],mail[50];
+  int day,month,year;
 
+
+  f = fopen("adherents.txt","r");
+  g = fopen("adherents2.txt","w+");
+
+  if (f != NULL && g != NULL) {
+    while (fscanf(f,"%s %s %s %d %d %d %s %s %s",cin1,nom,prenom,&day, &month, &year,tel,mail, sexe) != EOF) {
+          if (strcmp(cin1,cin) == 0)
+              fprintf(g,"%s %s %s %d %d %d %s %s %s\n",a.cin,a.nom,a.prenom,a.ddn.day,a.ddn.month,a.ddn.year,a.tel,a.mail,a.sexe);
+          else
+              fprintf(g,"%s %s %s %d %d %d %s %s %s\n",cin1,nom,prenom,day,month,year,tel,mail,sexe);
+    }
+  }
+  fclose(f);
+  fclose(g);
+remove("adherents.txt");
+rename("adherents2.txt","adherents.txt");
+}	
+	
+	
+void tmp_cin (char cin[10])
+{
+  FILE *f;
+  char a[10];
+
+  f = fopen("tmp.txt","r");
+
+  if (f != NULL)
+  fscanf(f,"%s",cin);
+
+    fclose(f);
+}	
+	
+void actualiser_dispo_diet(char date[30],char heure[30], char salle[30]) 
+{
+  FILE *f2, *f1;
+  char date1[30],heure1[30], cin1 [20],salle1[20],cour1[20],nom1[50],prenom1[50];
+ char type1[50];
+
+
+  f2 = fopen("dispo_diet.txt","r");
+  f1 = fopen("dispo_diet2.txt","w");
+
+  if (f2 != NULL && f1 != NULL)
+   {
+    while (fscanf(f2,"%s %s %s %s",cin1,date1,heure1,salle1) != EOF) 
+    {
+          if ((strcmp(date,date1) == 0) && (strcmp(heure,heure1)==0) && (strcmp(salle,salle1)==0))
+              fprintf(f1,"");
+          else
+              fprintf(f1,"%s %s %s %s \n",cin1,date1,heure1,salle1);
+    }
+  }
+  fclose(f2);
+  fclose(f1);
+  remove("dispo_diet.txt");
+  rename("dispo_diet2.txt","dispo_diet.txt");
+}
+
+
+void actualiser_dispo_med(char date[30],char heure[30], char salle[30]) 
+{
+  FILE *f2, *f1;
+  char date1[30],heure1[30], cin1 [20],salle1[20],cour1[20],nom1[50],prenom1[50];
+ char type1[50];
+
+
+  f2 = fopen("dispo_med.txt","r");
+  f1 = fopen("dispo_med2.txt","w");
+
+  if (f2 != NULL && f1 != NULL)
+   {
+    while (fscanf(f2,"%s %s %s %s",cin1,date1,heure1,salle1) != EOF) 
+    {
+          if ((strcmp(date,date1) == 0) && (strcmp(heure,heure1)==0) && (strcmp(salle,salle1)==0))
+              fprintf(f1,"");
+          else
+              fprintf(f1,"%s %s %s %s \n",cin1,date1,heure1,salle1);
+    }
+  }
+  fclose(f2);
+  fclose(f1);
+  remove("dispo_med.txt");
+  rename("dispo_med2.txt","dispo_med.txt");
+  
+}
+
+void actualiser_dispo_kine(char date[30],char heure[30], char salle[30]) 
+{
+  FILE *f2, *f1;
+  char date1[30],heure1[30], cin1 [20],salle1[20],cour1[20],nom1[50],prenom1[50];
+ char type1[50];
+
+
+  f2 = fopen("dispo_kiné.txt","r");
+  f1 = fopen("dispo_kiné2.txt","w");
+
+  if (f2 != NULL && f1 != NULL)
+   {
+    while (fscanf(f2,"%s %s %s %s",cin1,date1,heure1,salle1) != EOF) 
+    {
+          if ((strcmp(date,date1) == 0) && (strcmp(heure,heure1)==0) && (strcmp(salle,salle1)==0))
+              fprintf(f1,"");
+          else
+              fprintf(f1,"%s %s %s %s \n",cin1,date1,heure1,salle1);
+    }
+  }
+  fclose(f2);
+  fclose(f1);
+  remove("dispo_kiné.txt");
+  rename("dispo_kiné2.txt","dispo_kiné.txt");
+  
+}
+
+/*void actualiser_dispo_coach(char date[30],char heure[30], char salle[30]) 
+{
+  FILE *f2, *f1;
+  char date1[30],heure1[30], cin1 [20],salle1[20],cour1[20],nom1[50],prenom1[50];
+ char type1[50]; char cours1[50];
+
+
+  f2 = fopen("dispo_coach.txt","r");
+  f1 = fopen("dispo_coach2.txt","w");
+
+  if (f2 != NULL && f1 != NULL)
+   {
+    while (fscanf(f2,"%s %s %s %s %s",cin1,date1,heure1,salle1,cours1) != EOF) 
+    {
+          if ((strcmp(date,date1) == 0) && (strcmp(heure,heure1)==0) && (strcmp(salle,salle1)==0))
+              fprintf(f1,"");
+          else
+              fprintf(f1,"%s %s %s %s %s \n",cin1,date1,heure1,salle1,cours1);
+    }
+  }
+  fclose(f2);
+  fclose(f1);
+  remove("dispo_coach.txt");
+  rename("dispo_coach2.txt","dispo_coach.txt");
+  
+}*/
+
+ enum
+{
+  NOMC2,
+  PRENOMC2,
+  DATEC2,
+  HEUREC2,
+  SALLEC2,
+  COURSC2,
+  COLUMNC2
+};
+
+void afficher_coach(GtkWidget *list) {
+
+GtkCellRenderer *renderer;
+GtkTreeViewColumn *column;
+GtkTreeIter iter;
+GtkListStore *store;
+
+  char nom[50], nom1[50];
+char prenom[50],prenom1[50];
+char cours[50];
+char date[50];
+char heure[50];
+char cin[30], cin2[30],cinn[30];
+char tel[50],ddn[50],sexe[30];
+char salle[30];
+int capacite;
+FILE *f, *f2;
+
+f = fopen("coach.txt","r");
+f2 = fopen("dispo_coach.txt","r");
+
+store = gtk_tree_view_get_model(list);
+if (store == NULL) {
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" nom",renderer,"text",NOMC2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" prenom",renderer,"text", PRENOMC2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" date",renderer,"text",DATEC2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" heure",renderer,"text",HEUREC2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" salle",renderer,"text",SALLEC2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" cours",renderer,"text",COURSC2,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+  
+
+
+store = gtk_list_store_new(COLUMNC2,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING);
+
+if (f!=NULL && f2!=NULL) {
+  while (fscanf(f2,"%s %s %s %s %s %d",cin2,date,heure,salle,cours,&capacite) != EOF) {
+   rewind(f);
+      while (fscanf(f,"%s %s %s %s %s %s",nom,prenom,cin,tel,ddn,sexe) != EOF) {
+        if (strcmp(cin2,cin) == 0){
+            gtk_list_store_append(store,&iter);
+            gtk_list_store_set(store,&iter,NOMC2,nom,PRENOMC2,prenom,DATEC2,date,HEUREC2,heure,SALLEC2,salle,COURSC2,cours,-1);
+      }
+    }
+  }
+}
+fclose(f);fclose(f2);
+gtk_tree_view_set_model(GTK_TREE_VIEW(list),GTK_TREE_MODEL(store));
+g_object_unref(store);
+}
+}
+
+void actualiser_dispo_coach2(char date[30],char heure[30], char salle[30]) 
+{
+  FILE *f2, *f1;
+  char date1[30],heure1[30], cin1 [20],salle1[20],cours1[20],nom1[50],prenom1[50];
+ char type1[50];
+int capacite1;
+
+  f2 = fopen("dispo_coach.txt","r");
+  f1 = fopen("dispo_coach2.txt","w");
+
+  if (f2 != NULL && f1 != NULL)
+   {
+    while (fscanf(f2,"%s %s %s %s %s %d",cin1,date1,heure1,salle1,cours1,&capacite1) != EOF) 
+    {
+          if ((strcmp(date,date1) == 0) && (strcmp(heure,heure1)==0) && (strcmp(salle,salle1))==0) 
+            {
+              
+         
+              capacite1=capacite1-1;
+              fprintf(f1,"%s %s %s %s %s %d \n",cin1,date1,heure1,salle1,cours1,capacite1);
+    
+            }
+          else
+              fprintf(f1,"%s %s %s %s %s %d \n",cin1,date1,heure1,salle1,cours1,capacite1);
+    }
+  }
+  fclose(f2);
+  fclose(f1);
+  remove("dispo_coach.txt");
+  rename("dispo_coach2.txt","dispo_coach.txt");
+  
+}
+
+void annuler_rdv2(char date[30],char heure[30], char salle[30]) 
+{
+  FILE *f2, *f1;
+  char date1[30],heure1[30], cin1 [20],salle1[20],cour1[20],nom1[50],prenom1[50];
+ char type1[50];
+char cours1[50];
+
+  f2 = fopen("rdv_adherent.txt","r");
+  f1 = fopen("rdv_adherent2.txt","w");
+
+  if (f2 != NULL && f1 != NULL)
+   {
+    while (fscanf(f2,"%s %s %s %s %s %s %s",type1,nom1,prenom1,date1,heure1,salle1,cours1) != EOF) 
+    {
+          if ((strcmp(date,date1) == 0) && (strcmp(heure,heure1)==0) && (strcmp(salle,salle1)==0))
+              fprintf(f1,"");
+          else
+              fprintf(f1,"%s %s %s %s %s %s %s \n",type1,nom1,prenom1,date1,heure1,salle1,cours1);
+    }
+  }
+  fclose(f2);
+  fclose(f1);
+  remove("rdv_adherent.txt");
+  rename("rdv_adherent2.txt","rdv_adherent.txt");
+}
+
+
+
+
+
+
+ enum
+{
+  EVENT,
+  COLUMNE
+};
+void afficher_calendrier(GtkWidget *list)
+{
+  GtkCellRenderer *renderer,*toggle;
+  GtkTreeViewColumn *column;
+  GtkTreeIter iter;
+  GtkListStore *store;
+  
+  char date[50];
+  char heure_mat[50];
+  char heure_soir[50];
+  char event[50];
+  FILE *f;
+  store=NULL;
+  store=gtk_tree_view_get_model(list);
+  if (store == NULL)
+  {
+    
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" event",renderer,"text",EVENT,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+
+  }
+  store=gtk_list_store_new(COLUMNE,G_TYPE_STRING);
+  f=fopen("calendrier.txt","r");
+  if(f == NULL)
+  {
+    return;
+  }
+  else
+  {
+    f=fopen("calendrier.txt","a+");
+    while(fscanf(f,"%s %s %s %s",date,heure_mat,heure_soir,event) != EOF)
+    {
+      if(strcmp(event,"none") != 0)
+      {
+	      gtk_list_store_append(store,&iter);
+	      gtk_list_store_set(store,&iter, EVENT,event,-1);
+	}
+
+    }
+    fclose(f);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(list),GTK_TREE_MODEL(store));
+    g_object_unref(store);
+  }
+
+}
+
+
+ 
+ enum
+{
+  NOMS,
+  PRENOMS,
+  SPECIALITES,
+  TELS,
+  COLUMNS
+};
+
+void afficher_staff2(GtkWidget *list)
+{
+  GtkCellRenderer *renderer,*toggle;
+  GtkTreeViewColumn *column;
+  GtkTreeIter iter;
+  GtkListStore *store;
+ char prenom[50];
+char specialite[100];
+char cin[30],tel[30],sexe[30];
+char date[30];
+char nom[50];
+  FILE *f,*g,*k,*i;
+
+  store=NULL;
+  store=gtk_tree_view_get_model(list);
+  if (store == NULL)
+  {
+    
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" nom",renderer,"text",NOMS,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" prenom",renderer,"text",PRENOMS,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+    
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" avec",renderer,"text",SPECIALITES,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+    renderer=gtk_cell_renderer_text_new();
+    column=gtk_tree_view_column_new_with_attributes(" date",renderer,"text",TELS,NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list),column);
+
+
+
+  }
+  store=gtk_list_store_new(COLUMNS,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING,G_TYPE_STRING);
+  
+f=fopen("dieteticien.txt","r");
+  if(f == NULL)
+  {
+    return;
+  }
+  else
+  {
+    f=fopen("dietetitien.txt","a+");
+    while(fscanf(f,"%s %s %s %s %s %s",nom,prenom,cin,tel,date,sexe) != EOF)
+    {
+      strcpy(specialite,"diététicien");
+      gtk_list_store_append(store,&iter);
+      gtk_list_store_set(store,&iter,NOMS,nom, PRENOMS,prenom,SPECIALITES,specialite,TELS,tel,-1);
+
+    }
+    fclose(f);
+   } 
+    g=fopen("medecin.txt","r");
+    if(g == NULL)
+  {
+    return;
+  }
+  else
+  {
+    g=fopen("medecin.txt","a+");
+    while(fscanf(g,"%s %s %s %s %s %s",nom,prenom,cin,tel,date,sexe) != EOF)
+    {
+      strcpy(specialite,"medecin");
+      gtk_list_store_append(store,&iter);
+      gtk_list_store_set(store,&iter,NOMS,nom, PRENOMS,prenom,SPECIALITES,specialite,TELS,tel,-1);
+
+    }
+    fclose(g);
+    }
+    k=fopen("kine.txt","r");
+    if(k == NULL)
+  {
+    return;
+  }
+  else
+  {
+    k=fopen("kine.txt","a+");
+    while(fscanf(k,"%s %s %s %s %s %s",nom,prenom,cin,tel,date,sexe) != EOF)
+    {
+      strcpy(specialite,"Kinésitherapeute");
+      gtk_list_store_append(store,&iter);
+      gtk_list_store_set(store,&iter,NOMS,nom, PRENOMS,prenom,SPECIALITES,specialite,TELS,tel,-1);
+
+    }
+    fclose(k);
+    }
+    i=fopen("coach.txt","r");
+    if(i == NULL)
+  {
+    return;
+  }
+  else
+  {
+    i=fopen("coach.txt","a+");
+    while(fscanf(i,"%s %s %s %s %s %s",nom,prenom,cin,tel,date,sexe) != EOF)
+    {
+      strcpy(specialite,"coach");
+      gtk_list_store_append(store,&iter);
+      gtk_list_store_set(store,&iter,NOMS,nom, PRENOMS,prenom,SPECIALITES,specialite,TELS,tel,-1);
+
+    }
+    fclose(i);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(list),GTK_TREE_MODEL(store));
+    g_object_unref(store);
+  }
+
+}
 

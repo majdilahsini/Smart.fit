@@ -190,3 +190,19 @@ on_button150s_clicked                  (GtkButton       *button,
 void
 on_button120s_clicked                  (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_treeview1s_row_activated            (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);
+
+void
+on_button10s_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_treeview350s_row_activated          (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);

@@ -35,11 +35,9 @@ main (int argc, char *argv[])
    * (except popup menus), just so that you see something after building
    * the project. Delete any components that you don't want shown initially.
    */
-  window1s = create_window1s ();
-  gtk_widget_show (window1s);
-  window2s = create_window2s ();
-  
-  window3s = create_window3s ();
+ 
+  window3s = create_esapce_adhrent();
+  gtk_widget_show(window3s);
   
 
   gtk_main ();

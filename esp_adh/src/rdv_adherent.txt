@@ -1,5 +1,6 @@
- Coach: pheobe buffey 20/05/2018 14h00==>16h00 salle6 kick_boxing 
- Diététicien: pheobe buffey 20/05/2018 14h00==>16h00 cabinetA check-up 
- Kinésitherapeute: perry hilmes 28/05/2018 08h00==>12h45 cabinetC check-up 
- Kinésitherapeute: kathryn diaz 29/05/2018 14h00==>16h00 cabinetA check-up 
- Docteur: monica geller 30/05/2018 08h00==>16h45 cabinetC check-up 
+Diététicien: lachlan williams lundi 14-16 CabinetB check-up 
+Kinésitherapeute: monica geller 21/05/2018 08h00==>16h45 CabinetA check-up 
+Coach: monica geller 21/05/2018 08h00==>16h45 GYM1 kick_boxing 
+Diététicien: danni patrick lundi 8-12 CabinetE check-up 
+Kinésitherapeute: jeevan nelson 03/02/2018 10h30==>12h00 CabinetC check-up 
+Docteur: lachlan williams 28/05/2018 08h00==>10h45 CabinetC check-up 
